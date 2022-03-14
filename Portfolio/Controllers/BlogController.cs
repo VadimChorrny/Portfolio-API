@@ -27,6 +27,30 @@ namespace Portfolio.Controllers
             if(id == 0) return NotFound();
             return _context.Blogs.SingleOrDefault(blog => blog.Id == id);
         }
+        [HttpPost]
+        public IActionResult Post(Blog model)
+        {
+            _context.Blogs.Add(model);
+            _context.SaveChanges();
+            return Ok(model);
+        }
+        [HttpPut]
+        public IActionResult Put(Blog model)
+        {
+            _context.Blogs.Update(model);
+            _context.SaveChanges();
+            return Ok(model);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var blogToDelete = _context.Blogs.FirstOrDefault(e => e.Id == id);
+            if (blogToDelete == null)
+                return NotFound();
+            _context.Blogs.Remove(blogToDelete);
+            _context.SaveChanges();
+            return Ok(blogToDelete);
+        }
 
     }
 }

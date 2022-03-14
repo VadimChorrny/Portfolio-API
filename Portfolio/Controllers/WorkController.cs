@@ -20,5 +20,22 @@ namespace Portfolio.Controllers
         {
             return _context.Works.ToList();
         }
+        [HttpPost]
+        public IActionResult Post(Work model)
+        {
+            _context.Works.Add(model);
+            _context.SaveChanges();
+            return Ok(model);
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var workToDelete = _context.Works.FirstOrDefault(e => e.Id == id);
+            if (workToDelete == null)
+                return NotFound();
+            _context.Works.Remove(workToDelete);
+            _context.SaveChanges();
+            return Ok(workToDelete);
+        }
     }
 }
